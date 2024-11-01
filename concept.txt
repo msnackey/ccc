@@ -1,0 +1,33 @@
+CCC: Cake, coffee and cycling
+A website to rate cafes based on their cake, coffee and cycling-related facilities
+
+Requirements:
+- User authentication
+    - Registration
+    - Email and password changes
+    - Forgot your password?
+
+- User profiles
+    - Shows reviews (based on popularity, i.e. likes)
+    - Shows photos
+    - Shows map with places which were reviewed
+    - Shows XP level, get points per feedback provided (e.g. simple rating = 50, review = 200, review with photo = 300)
+
+- Reviews
+    - Description
+    - Star-based rating (1 - 5)
+    - Date
+    - Likes
+    - Photo's
+
+- Simple ratings
+    - Star-based rating, but no description or photos
+
+- Home page
+    - Show latest reviews
+    - Show a map (of the Netherlands) with rated cafes
+
+Nice-to-haves:
+- Register with FB/Google/etc.
+- Toprated cafes in an area
+- Have the map shown be related to the place where the user is based
