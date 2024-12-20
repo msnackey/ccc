@@ -14,8 +14,8 @@ class Cafe(models.Model):
 
     objects = CafeManager()
 
-    # class Meta:
-    #     ordering = ["-start_datetime"]
+    class Meta:
+        ordering = ["name"]
 
     def __str__(self):
         return self.name

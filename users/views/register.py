@@ -19,6 +19,6 @@ class RegisterView(View):
         forms = self.form_class(request.POST)
         if forms.is_valid():
             forms.save()
-            return redirect("users:signin")
+            return redirect("users:login")
         context = {"form": forms}
         return render(request, self.template_name, context)
