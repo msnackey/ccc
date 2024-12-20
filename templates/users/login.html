@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Register{% endblock title %}
+{% block title %}Login{% endblock title %}
 
 {% block extracss %}{% endblock extracss %}
 
@@ -27,32 +27,22 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="label" for="email">{{ form.email.label }}</label>
-                                    {{ form.email }}
-                                    <span class="text-danger">{{ form.errors.email }}</span>
+                                    <label class="label" for="password">{{ form.password.label }}</label>
+                                    {{ form.password }}
+                                    <span class="text-danger">{{ form.errors.password }}</span>
                                 </div>
+                            </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label class="label" for="password">{{ form.password1.label }}</label>
-                                    {{ form.password1 }}
-                                    <span class="text-danger">{{ form.errors.password1 }}</span>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label class="label" for="password">{{ form.password2.label }}</label>
-                                    {{ form.password2 }}
-                                    <span class="text-danger">{{ form.errors.password2 }}</span>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary">Create an account</button>
+                                    <button type="submit" class="btn btn-primary">Login</button>
                                 </div>
                             </div>
                         </div>
                     </form>
+                    <div class="col-10 col-lg-9">
+                        <p>Don't have an account yet? Sign up here!</p>
+                    </div>
                 </div>
             </div>
         </div>
