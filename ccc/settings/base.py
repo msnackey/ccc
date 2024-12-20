@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # "accounts",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -89,12 +89,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# AUTH_USER_MODEL = "accounts.User"
+AUTH_USER_MODEL = "users.User"
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-locale.setlocale(locale.LC_ALL, "nl_NL")
+locale.setlocale(locale.LC_ALL, "nl_NL.utf8")
 
 LANGUAGE_CODE = "en-US"
 
@@ -104,7 +104,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = False
+USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
