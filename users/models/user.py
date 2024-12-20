@@ -4,19 +4,16 @@ from django.utils.translation import gettext_lazy as _
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    """Custom user model"""
+    """User model"""
 
     email = models.EmailField(
         _("Email Address"),
         max_length=255,
         unique=True,
         help_text="Ex: example@example.com",
+        blank=False,
     )
-    username = models.CharField(
-        _("Username"),
-        max_length=255,
-        unique=True,
-    )
+    username = models.CharField(_("Username"), max_length=255, unique=True, blank=False)
     is_staff = models.BooleanField(_("Staff Status"), default=False)
     is_active = models.BooleanField(_("Active"), default=True)
     date_joined = models.DateTimeField(_("Date Joined"), auto_now_add=True)
@@ -29,4 +26,4 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ["email"]
 
     def __str__(self):
-        return self.email
+        return self.username
