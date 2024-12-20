@@ -21,16 +21,11 @@ class Rating(models.Model):
         FOUR = 4, "★★★★"
         FIVE = 5, "★★★★★"
 
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="ratings", blank=False, null=False
-    )
-    cafe = models.ForeignKey(
-        Cafe, on_delete=models.CASCADE, related_name="ratings", blank=False, null=False
-    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="ratings")
+    cafe = models.ForeignKey(Cafe, on_delete=models.CASCADE, related_name="ratings")
     rating = models.PositiveSmallIntegerField(
         choices=StarRating.choices,
         help_text="Rating between 1 and 5 stars",
-        blank=False,
     )
     date = models.DateTimeField(auto_now_add=True)
 

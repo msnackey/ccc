@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+
+{% block extracss %}{% endblock extracss %}
+
+{% block content %}
+<div class="container">
+    {% for cafe in cafes %}
+    <p><a href="{% url 'cafes:cafe_detail' id=cafe.google_place_id %}">{{ cafe.name }}</a></p>
+    {% endfor %}
+</div>
+{% endblock content %}
+
+{% block extrascripts %}{% endblock extrascripts %}
+

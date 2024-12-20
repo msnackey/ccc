@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ cafe.name }}{% endblock title %}
+
+{% block extracss %}{% endblock extracss %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ cafe.name }}</h1>
+    {% for review in cafe.reviews.all %}
+    <p>{{ review.title }}</p>
+    <p>{{ review.rating }}</p>
+    <p>{{ review.user }}</p>
+    <p>{{ review.date }}</p>
+    <p>{{ review.content }}</p>
+    {% endfor %}
+</div>
+{% endblock content %}
+
+{% block extrascripts %}{% endblock extrascripts %}
+

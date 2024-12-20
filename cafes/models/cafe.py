@@ -10,7 +10,10 @@ class CafeManager(models.Manager):
 class Cafe(models.Model):
     """Cafe model"""
 
-    name = models.CharField(max_length=255, blank=False)
+    name = models.CharField(max_length=255)
+    google_place_id = models.CharField(max_length=255, unique=True)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
 
     objects = CafeManager()
 

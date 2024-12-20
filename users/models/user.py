@@ -11,9 +11,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         max_length=255,
         unique=True,
         help_text="Ex: example@example.com",
-        blank=False,
     )
-    username = models.CharField(_("Username"), max_length=255, unique=True, blank=False)
+    username = models.CharField(_("Username"), max_length=255, unique=True)
     is_staff = models.BooleanField(_("Staff Status"), default=False)
     is_active = models.BooleanField(_("Active"), default=True)
     date_joined = models.DateTimeField(_("Date Joined"), auto_now_add=True)
