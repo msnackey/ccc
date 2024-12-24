@@ -1,0 +1,23 @@
+:root {
+    --primary: #8B4513;
+    --secondary: #F5F5DC;
+    --tertiary: #6B8E23;
+    --accent: #87CEEB;
+    --grey: #2F4F4F;
+}
+
+body {
+    background-color: var(--secondary) !important;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 80vw;
+    object-fit: cover;
+}
+
+@media (min-width: 992px) {
+    .card-img-top {
+    height: 15vw;
+}
+}

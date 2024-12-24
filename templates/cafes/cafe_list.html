@@ -6,9 +6,27 @@
 
 {% block content %}
 <div class="container">
-    {% for cafe in cafes %}
-    <p><a href="{% url 'cafes:cafe_detail' id=cafe.google_place_id %}">{{ cafe.name }}</a></p>
-    {% endfor %}
+    <div class="row">
+        {% for cafe in cafes %}
+        <div class="col-lg-4 px-4 my-4">
+            <div class="card">
+                <a href="{% url 'cafes:cafe_detail' id=cafe.google_place_id %}"><img src="{% static 'img/google/' %}{{ cafe.google_place_id }}.jpg" height="200" class="card-img-top" alt="Photo of {{ cafe.name }}"></a>
+                <div class="card-body">
+                    <h5 class="card-title">{{ cafe.name }}</h5>
+                    <p class="card-text">{{ cafe.rating }} <span>({{ cafe.number_of_ratings }})</span></p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for review in cafe.reviews.all|slice:":3" %}
+                    <li class="list-group-item">
+                        <p>{{ review.title }} ({{ review.rating.rating }}) - {{ review.user }}</p>
+                        <p>{{ review.content }}</p>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock content %}
 
