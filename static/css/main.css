@@ -10,6 +10,39 @@ body {
     background-color: var(--secondary) !important;
 }
 
+.bg-primary {
+    background-color: var(--primary) !important;
+}
+.bg-secondary {
+    background-color: var(--secondary) !important;
+}
+.bg-tertiary {
+    background-color: var(--tertiary) !important;
+}
+.bg-accent {
+    background-color: var(--accent) !important;
+}
+.bg-grey {
+    background-color: var(--grey) !important;
+}
+
+.text-primary {
+    color: var(--primary) !important;
+}
+.text-secondary {
+    color: var(--secondary) !important;
+}
+.text-tertiary {
+    color: var(--tertiary) !important;
+}
+.text-accent {
+    color: var(--accent) !important;
+}
+.text-grey {
+    color: var(--grey) !important;
+}
+
+
 .card-img-top {
     width: 100%;
     height: 80vw;
@@ -20,4 +53,20 @@ body {
     .card-img-top {
     height: 15vw;
 }
+}
+
+
+.star {
+  display: inline-block;
+  position: relative;
+}
+
+.star:after {
+  font-family: FontAwesome;
+  content: "\f005";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  overflow: hidden;
 }
