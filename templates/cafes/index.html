@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load custom_filters %}
+
+{% block title %}Home{% endblock title %}
+
+{% block extracss %}{% endblock extracss %}
+
+{% block content %}
+<div class="container overflow-hidden">
+    <div class="row g-3 px-3 px-lg-0">
+        <div class="col-lg-7">
+            <h2>Top rated cafes</h2>
+            {% for cafe in top_rated_cafes %}
+            <div class="card my-4">
+                <a href="{% url 'cafes:cafe_detail' id=cafe.google_place_id %}"><img src="{% static 'img/google/' %}{{ cafe.google_place_id }}.jpg" class="cafe-card-img-top" alt="Photo of {{ cafe.name }}"></a>
+                <div class="card-body bg-primary text-light">
+                    <h4 class="card-title">{{ cafe.name }}</h4>
+                    <div class="row">
+                        <div class="col">
+                            {% for star in cafe.rating|star %}
+                                {% if star == 'f' %}
+                                <span class="fa-solid fa-star"></span>
+                                {% elif star == 'h' %}
+                                <span class="fa-regular fa-star star"></span>
+                                {% elif star == 'e' %}
+                                <span class="fa-regular fa-star"></span>
+                                {% endif %}
+                            {% endfor %}
+                            <span class="review-rating">- {{ cafe.rating }} <span>({{ cafe.number_of_ratings }} ratings)</span></span>
+                        </div>
+                    </div>
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for review in cafe.reviews.all|slice:":3" %}
+                    <li class="list-group-item">
+                        <span class="review-title">{{ review.title }}</span>
+                        <p>
+                            <span class="review-rating">
+                            {% for star in review.rating.rating|star %}
+                                {% if star == 'f' %}
+                                <span class="fa-solid fa-star"></span>
+                                {% elif star == 'h' %}
+                                <span class="fa-regular fa-star star"></span>
+                                {% elif star == 'e' %}
+                                <span class="fa-regular fa-star"></span>
+                                {% endif %}
+                            {% endfor %}
+                            </span>
+                            <span class="review-user">- {{ review.user }}</span>
+                            <span class="review-date">({{ review.date|custom_timesince }} {% translate 'ago' %})</span>
+                        </p>
+                        <p class="review-content">{{ review.content }}</p>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-lg-1"></div>
+        <div class="col-lg-4 ">
+            <h2>Recent reviews</h2>
+            {% for review in recent_reviews %}
+            <div class="card my-4">
+                <a href="{% url 'cafes:cafe_detail' id=review.cafe.google_place_id %}"><img src="{% static 'img/google/' %}{{ review.cafe.google_place_id }}.jpg" class="review-card-img-top" alt="Photo of {{ review.cafe.name }}"></a>
+                <div class="card-body bg-primary text-light">
+                    <h4 class="card-title">{{ review.cafe.name }}</h4>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <span class="review-title">{{ review.title }}</span>
+                        <p>
+                            <span class="review-rating">
+                            {% for star in review.rating.rating|star %}
+                                {% if star == 'f' %}
+                                <span class="fa-solid fa-star"></span>
+                                {% elif star == 'h' %}
+                                <span class="fa-regular fa-star star"></span>
+                                {% elif star == 'e' %}
+                                <span class="fa-regular fa-star"></span>
+                                {% endif %}
+                            {% endfor %}
+                            </span>
+                            <span class="review-user">- {{ review.user }}</span>
+                            <span class="review-date">({{ review.date|custom_timesince }} {% translate 'ago' %})</span>
+                        </p>
+                        <p class="review-content">{{ review.content }}</p>
+                    </li>
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block extrascripts %}{% endblock extrascripts %}
+

@@ -43,30 +43,63 @@ body {
 }
 
 
-.card-img-top {
+.cafe-card-img-top {
     width: 100%;
-    height: 80vw;
+    height: 40vw;
     object-fit: cover;
 }
-
 @media (min-width: 992px) {
-    .card-img-top {
+    .cafe-card-img-top {
     height: 15vw;
+}
+}
+
+.review-card-img-top {
+    width: 100%;
+    height: 30vw;
+    object-fit: cover;
+}
+@media (min-width: 992px) {
+    .review-card-img-top {
+    height: 10vw;
 }
 }
 
 
 .star {
-  display: inline-block;
-  position: relative;
+    display: inline-block;
+    position: relative;
 }
 
 .star:after {
-  font-family: FontAwesome;
-  content: "\f005";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 50%;
-  overflow: hidden;
+    font-family: FontAwesome;
+    content: "\f005";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50%;
+    overflow: hidden;
+}
+
+
+.review-title {
+    font-size: calc(1.25 * var(--bs-body-font-size));
+    font-weight: bold;
+}
+
+.review-rating {
+    font-weight: 600;
+}
+
+.review-user {
+    font-weight: 600;
+}
+
+.review-date {
+    font-weight: 600;
+    font-style: italic;
+}
+
+.review-content {
+
 }

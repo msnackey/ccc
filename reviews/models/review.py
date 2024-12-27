@@ -1,4 +1,3 @@
-from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 from cafes.models import Cafe
@@ -9,7 +8,9 @@ from users.models import User
 class ReviewManager(models.Manager):
     """Review manager"""
 
-    pass
+    def get_recent_reviews(self, count: int = 5):
+        """Gets the most recent reviews. 5 reviews are the default."""
+        return self.get_queryset()[:count]
 
 
 class Review(models.Model):

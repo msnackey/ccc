@@ -1,15 +1,18 @@
 from django.views.generic.list import ListView
 
 from cafes.models import Cafe
+from reviews.models import Review
 
 
-class CafeListView(ListView):
+class IndexView(ListView):
     model = Cafe
-    template_name = "cafes/cafe_list.html"
+    template_name = "cafes/index.html"
     context_object_name = "cafes"
 
-    # Optional: Override get_context_data to add extra context
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Add additional context if necessary
+
+        context["top_rated_cafes"] = Cafe.objects.get_top_rated_cafes()
+        context["recent_reviews"] = Review.objects.get_recent_reviews()
+
         return context

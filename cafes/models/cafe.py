@@ -4,7 +4,20 @@ from django.db import models
 class CafeManager(models.Manager):
     """Cafe manager"""
 
-    pass
+    def get_average_number_of_ratings(self):
+        """Gets the average number of ratings across all cafes."""
+        return Cafe.objects.aggregate(avg=models.Avg("number_of_ratings"))["avg"]
+
+    def get_top_rated_cafes(self, count: int = 5, min_reviews: int = 0):
+        """Gets the top rated cafes. 5 cafes are the default."""
+        if self.get_average_number_of_ratings() >= 5:
+            min_reviews = 5
+
+        return (
+            self.get_queryset()
+            .filter(number_of_ratings__gte=min_reviews)
+            .order_by("-rating", "-number_of_ratings")[:count]
+        )
 
 
 class Cafe(models.Model):
