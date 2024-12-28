@@ -110,8 +110,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Helper function to create content for info window.
     function createContentForInfoWindow(id, name, address, ref) {
-        let url = "{% url 'cafes:cafe_detail' id='PLACE_ID_PLACEHOLDER' %}";
-        url = url.replace('PLACE_ID_PLACEHOLDER', id);
+        let url = cafeDetailUrl.replace('PLACE_ID_PLACEHOLDER', id);
         let content = 
             '<div id="infowindow-content">' +
             '<span id="place-displayname" class="title">' +

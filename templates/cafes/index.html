@@ -99,15 +99,12 @@
         </div>
     </div>
 </div>
-<div id="test" 
-     data-cafes='{{ cafes_json|safe|json_script:"cafesdata" }}' 
-     data-detail-url='{% url "cafes:cafe_detail" id="PLACE_ID_PLACEHOLDER" %}' 
-     data-country='nl'>
-</div>
-
 {% endblock content %}
 
 {% block extrascripts %}
+<script>
+    const cafeDetailUrl = "{% url 'cafes:cafe_detail' id='PLACE_ID_PLACEHOLDER' %}";
+</script>
 <script src="{% static 'js/maps.js' %}"></script>
 {% endblock extrascripts %}
 
