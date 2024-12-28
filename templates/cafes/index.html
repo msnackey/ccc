@@ -104,6 +104,7 @@
 {% block extrascripts %}
 <script>
     const cafeDetailUrl = "{% url 'cafes:cafe_detail' id='PLACE_ID_PLACEHOLDER' %}";
+    const addReviewUrl = "{% url 'cafes:cafe_detail' id='PLACE_ID_PLACEHOLDER' %}"; // TODO: Change to add_review url
 </script>
 <script src="{% static 'js/maps.js' %}"></script>
 {% endblock extrascripts %}

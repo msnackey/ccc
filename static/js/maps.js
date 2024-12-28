@@ -1,5 +1,5 @@
 (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
-    ({key: "AIzaSyBfZxgmv0EW1sOrQwPrJdzFTctCO-t67gw", v: "beta"});
+    ({key: "AIzaSyAYmZTsDBcG751atHJ5iJTOzdaGjwpUe60", v: "beta"});
 
 document.addEventListener("DOMContentLoaded", async function () {
     let map;
@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         // Fetch cafe data from the backend
         const response = await fetch('/api/cafes/');
         const cafes = await response.json();
+        const googlePlaceIds = cafes.map(cafe => cafe.google_place_id);
 
         // Request needed libraries.
         //@ts-ignore
@@ -45,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             // InfoWindow for each marker
             infoWindow = new google.maps.InfoWindow({});
 
-            let content = createContentForInfoWindow(cafe.google_place_id, cafe.name, cafe.address, 'Show details');
+            let content = createContentForInfoWindow(cafe.google_place_id, cafe.name, cafe.address, googlePlaceIds);
 
             marker.addListener("gmp-click", () => {
                 infoWindow.setContent(content);
@@ -89,7 +90,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 map.setZoom(17);
             };
 
-            let content = createContentForInfoWindow(place.id, place.displayName, place.formattedAddress, 'Add a review');
+            let content = createContentForInfoWindow(place.id, place.displayName, place.formattedAddress, googlePlaceIds);
 
             updateInfoWindow(content, place.location);
             marker.position = place.location;
@@ -109,18 +110,22 @@ document.addEventListener("DOMContentLoaded", async function () {
     };
 
     // Helper function to create content for info window.
-    function createContentForInfoWindow(id, name, address, ref) {
-        let url = cafeDetailUrl.replace('PLACE_ID_PLACEHOLDER', id);
-        let content = 
-            '<div id="infowindow-content">' +
-            '<span id="place-displayname" class="title">' +
-            name +
-            "</span><br />" +
-            '<span id="place-address">' +
-            address +
-            "</span><br />" +
-            `<a href="${url}">${ref}</a>` +
-            "</div>";
+    function createContentForInfoWindow(id, name, address, googlePlaceIds) {
+        let detailUrl = cafeDetailUrl.replace('PLACE_ID_PLACEHOLDER', id);
+        let reviewUrl = addReviewUrl.replace('PLACE_ID_PLACEHOLDER', id);
+
+        let nameElement = '<span id="place-displayname" class="title">' + name + '</span>';
+        let addressElement = '<span id="place-address">' + address + '</span>';
+        let reviewElement = `<a href="${reviewUrl}">Write a review</a>`;
+        let detailsElement;
+
+        if (googlePlaceIds.includes(id)) {
+            detailsElement = `<a href="${detailUrl}">Show details</a>`;
+        } else {
+            detailsElement = '';
+        };
+
+        let content = '<div id="infowindow-content">' + nameElement + '<br/>' + addressElement + '<br/><br/>' + detailsElement + '<br/>' + reviewElement + '</div>';
 
         return content;
     };
