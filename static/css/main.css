@@ -50,7 +50,7 @@ body {
 }
 @media (min-width: 992px) {
     .cafe-card-img-top {
-    height: 15vw;
+        height: 15vw;
 }
 }
 
@@ -61,7 +61,7 @@ body {
 }
 @media (min-width: 992px) {
     .review-card-img-top {
-    height: 10vw;
+        height: 10vw;
 }
 }
 
@@ -89,17 +89,54 @@ body {
 
 .review-rating {
     font-weight: 600;
+    color: goldenrod;
 }
 
 .review-user {
     font-weight: 600;
+    color: var(--grey);
 }
 
 .review-date {
     font-weight: 600;
     font-style: italic;
+    color: var(--grey);
 }
 
 .review-content {
 
 }
+
+
+#map {
+    height: 80vw;
+}
+@media (min-width: 992px) {
+    #map {
+        height: 30vw;
+}
+}
+
+#place-autocomplete-card {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin: 10px;
+    padding: 5px;
+    font-family: Roboto, sans-serif;
+    font-size: large;
+    font-weight: bold;
+}
+
+gmp-place-autocomplete {
+    width: 300px;
+}
+
+#infowindow-content .title {
+    font-weight: bold;
+}
+
+#map #infowindow-content {
+    display: inline;
+}
+

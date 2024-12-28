@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.views.generic.list import ListView
 
 from cafes.models import Cafe
@@ -16,3 +17,7 @@ class IndexView(ListView):
         context["recent_reviews"] = Review.objects.get_recent_reviews()
 
         return context
+
+
+def cafe_data(request):
+    return JsonResponse(list(Cafe.objects.values()), safe=False)

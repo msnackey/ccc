@@ -18,7 +18,7 @@
                 <div class="card-body bg-primary text-light">
                     <h4 class="card-title">{{ cafe.name }}</h4>
                     <div class="row">
-                        <div class="col">
+                        <div class="col review-rating">
                             {% for star in cafe.rating|star %}
                                 {% if star == 'f' %}
                                 <span class="fa-solid fa-star"></span>
@@ -28,7 +28,7 @@
                                 <span class="fa-regular fa-star"></span>
                                 {% endif %}
                             {% endfor %}
-                            <span class="review-rating">- {{ cafe.rating }} <span>({{ cafe.number_of_ratings }} ratings)</span></span>
+                            <span class="text-light" style="font-weight: 600;">- {{ cafe.rating }} <span>({{ cafe.number_of_ratings }} ratings)</span></span>
                         </div>
                     </div>
                 </div>
@@ -59,8 +59,14 @@
             {% endfor %}
         </div>
         <div class="col-lg-1"></div>
-        <div class="col-lg-4 ">
-            <h2>Recent reviews</h2>
+        <div class="col-lg-4">
+            <div class="my-5">
+                <div class="place-autocomplete-card" id="place-autocomplete-card">
+                    <p>Search for a place here:</p>
+                </div>
+                <div id="map"></div>
+            </div>
+            <h3>Recent reviews</h3>
             {% for review in recent_reviews %}
             <div class="card my-4">
                 <a href="{% url 'cafes:cafe_detail' id=review.cafe.google_place_id %}"><img src="{% static 'img/google/' %}{{ review.cafe.google_place_id }}.jpg" class="review-card-img-top" alt="Photo of {{ review.cafe.name }}"></a>
@@ -93,7 +99,15 @@
         </div>
     </div>
 </div>
+<div id="test" 
+     data-cafes='{{ cafes_json|safe|json_script:"cafesdata" }}' 
+     data-detail-url='{% url "cafes:cafe_detail" id="PLACE_ID_PLACEHOLDER" %}' 
+     data-country='nl'>
+</div>
+
 {% endblock content %}
 
-{% block extrascripts %}{% endblock extrascripts %}
+{% block extrascripts %}
+<script src="{% static 'js/maps.js' %}"></script>
+{% endblock extrascripts %}
 
