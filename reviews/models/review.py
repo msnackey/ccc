@@ -17,7 +17,12 @@ class Review(models.Model):
     """Review model"""
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reviews")
-    cafe = models.ForeignKey(Cafe, on_delete=models.CASCADE, related_name="reviews")
+    cafe = models.ForeignKey(
+        Cafe,
+        on_delete=models.CASCADE,
+        related_name="reviews",
+        to_field="google_place_id",
+    )
     rating = models.ForeignKey(
         Rating,
         on_delete=models.CASCADE,

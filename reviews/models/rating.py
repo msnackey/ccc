@@ -1,4 +1,3 @@
-from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 from cafes.models import Cafe
@@ -22,7 +21,12 @@ class Rating(models.Model):
         FIVE = 5, "★★★★★"
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="ratings")
-    cafe = models.ForeignKey(Cafe, on_delete=models.CASCADE, related_name="ratings")
+    cafe = models.ForeignKey(
+        Cafe,
+        on_delete=models.CASCADE,
+        related_name="ratings",
+        to_field="google_place_id",
+    )
     rating = models.PositiveSmallIntegerField(
         choices=StarRating.choices,
         help_text="Rating between 1 and 5 stars",

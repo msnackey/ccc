@@ -8,9 +8,12 @@ class CafeManager(models.Manager):
 
     def get_average_number_of_ratings(self):
         """Gets the average number of ratings across all cafes."""
-        return Cafe.objects.aggregate(avg=models.Avg("number_of_ratings"))["avg"]
+        if Cafe.objects.exists():
+            return Cafe.objects.aggregate(avg=models.Avg("number_of_ratings"))["avg"]
+        else:
+            return 0
 
-    def get_top_rated_cafes(self, count: int = 5, min_reviews: int = 0):
+    def get_top_rated_cafes(self, count: int = 5, min_reviews: int = 1):
         """Gets the top rated cafes. 5 cafes are the default."""
         if self.get_average_number_of_ratings() >= 5:
             min_reviews = 5
@@ -25,8 +28,8 @@ class CafeManager(models.Manager):
 class Cafe(models.Model):
     """Cafe model"""
 
+    google_place_id = models.CharField(primary_key=True, max_length=255, unique=True)
     name = models.CharField(max_length=255)
-    google_place_id = models.CharField(max_length=255, unique=True)
     google_maps_uri = models.CharField(max_length=255)
     website = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
