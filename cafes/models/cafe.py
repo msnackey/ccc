@@ -33,7 +33,7 @@ class CafeManager(models.Manager):
         cafe, created = self.get_or_create(google_place_id=google_place_id)
 
         if created:
-            api_key = os.getenv("GOOGLE_MAPS_API_KEY")
+            api_key = os.getenv("GOOGLE_PLACES_API_KEY")
             url = f"https://places.googleapis.com/v1/places/{google_place_id}?languageCode=nl&fields=*&key={api_key}"
             response = requests.get(url)
             data = response.json()
