@@ -3,21 +3,29 @@
 {% load i18n %}
 {% load custom_filters %}
 
-{% block title %}Cafe list{% endblock title %}
+{% block title %}All cafes{% endblock title %}
 
 {% block extracss %}{% endblock extracss %}
 
 {% block content %}
-<div class="container">
+<div class="container overflow-hidden">
     <div class="row">
+        <form method="get" class="mb-3">
+            <div class="input-group">
+                {{ form.as_p }}
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div>
+        </form>
+    </div>
+    <div class="row g-3 px-3 px-lg-0">
         {% for cafe in cafes %}
-        <div class="col-lg-4 px-4 my-4">
-            <div class="card">
-                <a href="{% url 'cafes:cafe_detail' id=cafe.google_place_id %}"><img src="{% static 'img/google/' %}{{ cafe.google_place_id }}.jpg" height="200" class="card-img-top" alt="Photo of {{ cafe.name }}"></a>
+        <div class="col-lg-4">
+            <div class="card m-3">
+                <a href="{% url 'cafes:cafe_detail' id=cafe.google_place_id %}"><img src="{% static 'img/google/' %}{{ cafe.google_place_id }}.jpg" class="cafe-card-img-top" alt="Photo of {{ cafe.name }}"></a>
                 <div class="card-body bg-primary text-light">
-                    <h5 class="card-title">{{ cafe.name }}</h5>
+                    <h4 class="card-title">{{ cafe.name }}</h4>
                     <div class="row">
-                        <div class="col">
+                        <div class="col review-rating">
                             {% for star in cafe.rating|star %}
                                 {% if star == 'f' %}
                                 <span class="fa-solid fa-star"></span>
@@ -27,15 +35,30 @@
                                 <span class="fa-regular fa-star"></span>
                                 {% endif %}
                             {% endfor %}
-                            <span class="card-text">- {{ cafe.rating }} <span>({{ cafe.number_of_ratings }})</span></span>
+                            <span class="text-light" style="font-weight: 600;">- {{ cafe.rating|stringformat:'.1f' }} <span>({{ cafe.number_of_ratings }} ratings)</span></span>
                         </div>
                     </div>
                 </div>
                 <ul class="list-group list-group-flush">
                     {% for review in cafe.reviews.all|slice:":3" %}
                     <li class="list-group-item">
-                        <p>{{ review.title }} ({{ review.rating.rating }}) - {{ review.user }} {{ review.date|timesince }} {% translate 'ago' %}</p>
-                        <p>{{ review.content }}</p>
+                        <span class="review-title">{{ review.title }}</span>
+                        <p>
+                            <span class="review-rating">
+                            {% for star in review.rating.rating|star %}
+                                {% if star == 'f' %}
+                                <span class="fa-solid fa-star"></span>
+                                {% elif star == 'h' %}
+                                <span class="fa-regular fa-star star"></span>
+                                {% elif star == 'e' %}
+                                <span class="fa-regular fa-star"></span>
+                                {% endif %}
+                            {% endfor %}
+                            </span>
+                            <span class="review-user">- {{ review.user }}</span>
+                            <span class="review-date">({{ review.rating.date|custom_timesince }})</span>
+                        </p>
+                        <p class="review-content">{{ review.content }}</p>
                     </li>
                     {% endfor %}
                 </ul>

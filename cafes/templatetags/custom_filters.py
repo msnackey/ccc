@@ -1,7 +1,6 @@
 from datetime import datetime, timezone
 
 from django import template
-from django.utils.timesince import timesince
 
 register = template.Library()
 
@@ -18,17 +17,40 @@ def star(value: float) -> str:
 
 
 @register.filter
-def custom_timesince(value):
-    """Custom timesince filter to exclude hours/minutes if time exceeds one day."""
+def custom_timesince(value):  # TODO: Localize
+    """Custom timesince filter to return minutes, hours or days since datetime."""
     if not value:
         return ""
 
     now = datetime.now(timezone.utc)
-    delta = now - value
+    timedelta = now - value
 
-    time_str = timesince(value, now)
+    if timedelta.total_seconds() < 60:
+        return "just now"
 
-    if delta.days >= 1:
-        return time_str.split(",")[0]
+    elif timedelta.total_seconds() < 3600:
+        minutes, seconds = divmod(timedelta.total_seconds(), 60)
+        if minutes == 1:
+            return "1 minute ago"
+        return f"{minutes:.0f} minutes ago"
 
-    return time_str
+    elif timedelta.days < 1:
+        hours, remainder = divmod(timedelta.total_seconds(), 3600)
+        return f"{hours:.0f} hours ago"
+
+    elif timedelta.days < 31:
+        if timedelta.days == 1:
+            return "1 day ago"
+        return f"{timedelta.days} days ago"
+
+    elif timedelta.days < 366:
+        months = timedelta.days * 12 / 365.25
+        if int(months) == 1:
+            return "1 month ago"
+        return f"{months:.0f} months ago"
+
+    else:
+        years = timedelta.days / 365.25
+        if int(years) == 1:
+            return "1 year ago"
+        return f"{years:.0f} years ago"

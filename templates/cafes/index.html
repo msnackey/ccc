@@ -49,7 +49,7 @@
                             {% endfor %}
                             </span>
                             <span class="review-user">- {{ review.user }}</span>
-                            <span class="review-date">({{ review.date|custom_timesince }} {% translate 'ago' %})</span>
+                            <span class="review-date">({{ review.rating.date|custom_timesince }})</span>
                         </p>
                         <p class="review-content">{{ review.content }}</p>
                     </li>
@@ -89,7 +89,7 @@
                             {% endfor %}
                             </span>
                             <span class="review-user">- {{ review.user }}</span>
-                            <span class="review-date">({{ review.date|custom_timesince }} {% translate 'ago' %})</span>
+                            <span class="review-date">({{ review.rating.date|custom_timesince }})</span>
                         </p>
                         <p class="review-content">{{ review.content }}</p>
                     </li>
