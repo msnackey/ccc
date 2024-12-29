@@ -24,6 +24,5 @@ class ReviewAdmin(admin.ModelAdmin):
         "user",
         "cafe",
         "rating",
-        "date",
     ]
     search_fields = ["title", "content", "user", "cafe"]

@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import now
 
 from cafes.models import Cafe
 from users.models import User
@@ -31,7 +32,7 @@ class Rating(models.Model):
         choices=StarRating.choices,
         help_text="Rating between 1 and 5 stars",
     )
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(default=now)
 
     objects = RatingManager()
 
@@ -41,8 +42,7 @@ class Rating(models.Model):
     @property
     def name(self):
         """Returns a name for the rating"""
-
         return f"{self.cafe} - {self.rating}"
 
     def __str__(self):
-        return self.get_rating_display()
+        return self.name

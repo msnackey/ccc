@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import now
 
 from cafes.models import Cafe
 from reviews.models import Rating
@@ -30,12 +31,11 @@ class Review(models.Model):
     )
     title = models.CharField(max_length=255)
     content = models.TextField(max_length=2000)
-    date = models.DateTimeField(auto_now_add=True)
 
     objects = ReviewManager()
 
     class Meta:
-        ordering = ["-date"]
+        ordering = ["-rating__date"]
 
     def __str__(self):
         return self.title
