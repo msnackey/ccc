@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ cafe_name }}{% endblock title %}
+
+{% block extracss %}{% endblock extracss %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ cafe_name }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <h3>Rating</h3>
+        {{ rating_form.as_p }}
+
+        <h3>Review</h3>
+        {{ formset.management_form }}
+        {% for form in formset %}
+            {{ form.as_p }}
+        {% endfor %}
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+{% endblock content %}
+
+{% block extrascripts %}{% endblock extrascripts %}

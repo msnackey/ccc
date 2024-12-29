@@ -28,7 +28,7 @@
                                 <span class="fa-regular fa-star"></span>
                                 {% endif %}
                             {% endfor %}
-                            <span class="text-light" style="font-weight: 600;">- {{ cafe.rating }} <span>({{ cafe.number_of_ratings }} ratings)</span></span>
+                            <span class="text-light" style="font-weight: 600;">- {{ cafe.rating|stringformat:'.1f' }} <span>({{ cafe.number_of_ratings }} ratings)</span></span>
                         </div>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
 {% block extrascripts %}
 <script>
     const cafeDetailUrl = "{% url 'cafes:cafe_detail' id='PLACE_ID_PLACEHOLDER' %}";
-    const addReviewUrl = "{% url 'cafes:cafe_detail' id='PLACE_ID_PLACEHOLDER' %}"; // TODO: Change to add_review url
+    const addReviewUrl = "{% url 'reviews:add_review' id='PLACE_ID_PLACEHOLDER' name='PLACE_NAME_PLACEHOLDER' %}";
 </script>
 <script src="{% static 'js/maps.js' %}"></script>
 {% endblock extrascripts %}

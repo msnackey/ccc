@@ -112,20 +112,20 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Helper function to create content for info window.
     function createContentForInfoWindow(id, name, address, googlePlaceIds) {
         let detailUrl = cafeDetailUrl.replace('PLACE_ID_PLACEHOLDER', id);
-        let reviewUrl = addReviewUrl.replace('PLACE_ID_PLACEHOLDER', id);
+        let reviewUrl = addReviewUrl.replace('PLACE_ID_PLACEHOLDER', id).replace('PLACE_NAME_PLACEHOLDER', name);
 
-        let nameElement = '<span id="place-displayname" class="title">' + name + '</span>';
+        let nameElement = '<h4 id="place-displayname" class="title">' + name + '</h4>';
         let addressElement = '<span id="place-address">' + address + '</span>';
         let reviewElement = `<a href="${reviewUrl}">Write a review</a>`;
         let detailsElement;
 
         if (googlePlaceIds.includes(id)) {
-            detailsElement = `<a href="${detailUrl}">Show details</a>`;
+            detailsElement = `<br/><a href="${detailUrl}">Show details</a>`;
         } else {
             detailsElement = '';
         };
 
-        let content = '<div id="infowindow-content">' + nameElement + '<br/>' + addressElement + '<br/><br/>' + detailsElement + '<br/>' + reviewElement + '</div>';
+        let content = '<div id="infowindow-content">' + nameElement + '<br/>' + addressElement + '<br/>' + detailsElement + '<br/>' + reviewElement + '</div>';
 
         return content;
     };
