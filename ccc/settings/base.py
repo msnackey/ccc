@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     "users",
     "cafes",
     "reviews",
-    "maps",
 ]
 
 MIDDLEWARE = [

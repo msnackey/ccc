@@ -23,5 +23,4 @@ urlpatterns = [
     path("", include("users.urls")),
     path("", include("cafes.urls")),
     path("", include("reviews.urls")),
-    # path("", include("maps.urls")),
 ]
