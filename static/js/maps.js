@@ -6,12 +6,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     let marker;
     let infoWindow;
 
-    async function initMap() {
-        // Fetch cafe data from the backend
-        const response = await fetch('/api/cafes/');
-        const cafes = await response.json();
-        const googlePlaceIds = cafes.map(cafe => cafe.google_place_id);
+    // Fetch cafe data from the backend
+    const response = await fetch('/api/cafes/');
+    const cafes = await response.json();
+    const googlePlaceIds = cafes.map(cafe => cafe.google_place_id);
 
+    async function initMap() {
         // Request needed libraries.
         //@ts-ignore
         const [{ Map }, { AdvancedMarkerElement }] = await Promise.all([
@@ -20,8 +20,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         ]);
 
         // Initialize the map.
+        const origin = { lat: 52.091664, lng: 5.121118 };
         map = new google.maps.Map(document.getElementById("map"), {
-            center: { lat: 52.091664, lng: 5.121118 },
+            center: origin,
             zoom: 10,
             mapId: "2835c76151db33b6",
             mapTypeControl: false,
@@ -92,14 +93,69 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             let content = createContentForInfoWindow(place.id, place.displayName, place.formattedAddress, googlePlaceIds);
 
-            updateInfoWindow(content, place.location);
+            updateInfoWindow(infoWindow, content, place.location);
             marker.position = place.location;
             marker.title = place.displayName;
         });
+
+        new ClickEventHandler(map, origin);
     };
 
+    function isIconMouseEvent(e) {
+        return "placeId" in e;
+        }
+
+    class ClickEventHandler { // TODO: Use new Places API
+        origin;
+        map;
+        placesService;
+        infowindow;
+        infowindowContent;
+        constructor(map, origin) {
+            this.origin = origin;
+            this.map = map;
+            this.placesService = new google.maps.places.PlacesService(map);
+            this.infowindow = new google.maps.InfoWindow();
+            this.infowindowContent = document.getElementById("infowindow-content");
+            this.infowindow.setContent(this.infowindowContent);
+            // Listen for clicks on the map.
+            this.map.addListener("click", this.handleClick.bind(this));
+        };
+        handleClick(event) {
+            // If the event has a placeId, use it.
+            if (isIconMouseEvent(event)) {
+                // Calling e.stop() on the event prevents the default info window from
+                // showing.
+                // If you call stop here when there is no placeId you will prevent some
+                // other map click event handlers from receiving the event.
+                event.stop();
+                if (event.placeId) {
+                    this.getPlaceInformation(event.placeId);
+                }
+            }
+        };
+        getPlaceInformation(placeId) {
+            const me = this;
+
+            this.placesService.getDetails({ placeId: placeId, language: 'nl' }, (place, status) => {
+                if (
+                    status === "OK" &&
+                    place &&
+                    place.geometry &&
+                    place.geometry.location
+                ) {
+                    me.infowindow.close();
+                    let content = createContentForInfoWindow(place.place_id, place.name, place.formatted_address, googlePlaceIds)
+                    updateInfoWindow(me.infowindow, content, place.geometry.location)
+                    me.infowindow.open(me.map);
+                }
+            });
+        };
+    };
+
+
     // Helper function to create an info window.
-    function updateInfoWindow(content, position) {
+    function updateInfoWindow(infoWindow, content, position) {
         infoWindow.setContent(content);
         infoWindow.setPosition(position);
         infoWindow.open({
