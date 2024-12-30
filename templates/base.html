@@ -25,6 +25,21 @@
                         <input class="form-control me-2" type="search" name="search" placeholder="Search cafes..." aria-label="Search">
                         <button class="btn btn-outline" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
+                    <div class="nav-item dropdown">
+                        <a class="nav-item dropdown nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-user"></i>
+                        </a>
+                        <ul class="nav-item dropdown dropdown-menu dropdown-menu-end">
+                            {% if user.is_authenticated %}
+                            <li><a class="dropdown-item" href="#">{{ user.username }}</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'users:logout' %}">Logout</a></li>
+                            {% else %}
+                            <li><a class="dropdown-item" href="{% url 'users:login' %}">Login</a></li>
+                            <li><a class="dropdown-item" href="{% url 'users:register' %}">Register</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
                 </div>
             </nav>
         </header>

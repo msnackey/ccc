@@ -24,6 +24,6 @@ class LoginView(View):
             user = authenticate(username=username, password=password)
             if user:
                 login(request, user)
-                return redirect("ccc:index")
+                return redirect("cafes:index")
         context = {"form": forms}
         return render(request, self.template_name, context)
