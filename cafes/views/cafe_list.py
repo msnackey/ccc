@@ -1,7 +1,6 @@
 from django.db.models import Q
 from django.views.generic.list import ListView
 
-from cafes.forms import CafeFilterForm
 from cafes.models import Cafe
 
 
@@ -24,5 +23,4 @@ class CafeListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["form"] = CafeFilterForm()
         return context
