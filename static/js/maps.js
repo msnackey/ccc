@@ -166,9 +166,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     };
 
     // Helper function to create content for info window.
+    // TODO: Style InfoWindow
     function createContentForInfoWindow(id, name, address, googlePlaceIds) {
         let detailUrl = cafeDetailUrl.replace('PLACE_ID_PLACEHOLDER', id);
-        let reviewUrl = addReviewUrl.replace('PLACE_ID_PLACEHOLDER', id).replace('PLACE_NAME_PLACEHOLDER', name);
+        let reviewUrl = addReviewUrl.replace('PLACE_ID_PLACEHOLDER', id).replace('PLACE_NAME_PLACEHOLDER', name); // TODO: Escape cafe names (e.g. Dagger Coffee // Zijdebalen)
 
         let nameElement = '<h4 id="place-displayname" class="title">' + name + '</h4>';
         let addressElement = '<span id="place-address">' + address + '</span>';

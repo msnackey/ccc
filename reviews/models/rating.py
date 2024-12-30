@@ -1,3 +1,5 @@
+# TODO: Add specific ratings for specific facilities (e.g. coffee, cake, cycling facilities, ...)
+
 from django.db import models
 from django.utils.timezone import now
 

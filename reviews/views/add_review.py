@@ -1,9 +1,11 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
 from cafes.models import Cafe
 from reviews.forms import RatingForm, ReviewRatingFormSet
 
 
+@login_required
 def add_review(request, id, name):
     if request.method == "POST":
         rating_form = RatingForm(request.POST)

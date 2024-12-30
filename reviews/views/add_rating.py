@@ -1,10 +1,12 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render
 
 from reviews.forms import RatingForm
 
 
-def submit_rating(request):
+@login_required
+def add_rating(request):
     if request.method == "POST":
         form = RatingForm(request.POST)
         if form.is_valid():
