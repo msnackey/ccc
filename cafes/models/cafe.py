@@ -1,6 +1,7 @@
 import os
 
 import requests
+from django.conf import settings
 from django.db import models
 
 
@@ -27,9 +28,7 @@ class CafeManager(models.Manager):
             .order_by("-rating", "-number_of_ratings")[:count]
         )
 
-    def get_or_create_from_google(
-        self, google_place_id
-    ):  # TODO: Add function to get and save cafe image
+    def get_or_create_from_google(self, google_place_id):
         """Queries the Google Places API to get additional data."""
 
         cafe, created = self.get_or_create(google_place_id=google_place_id)
@@ -47,15 +46,45 @@ class CafeManager(models.Manager):
                 )
                 cafe.website = data.get("websiteUri", "Unknown Website")
                 cafe.address = data.get("formattedAddress", "Unknown Address")
-                cafe.latitude = data.get("location", "{}").get("latitude", 0.0)
-                cafe.longitude = data.get("location", "{}").get("longitude", 0.0)
+                cafe.latitude = data.get("location", {}).get("latitude", 0.0)
+                cafe.longitude = data.get("location", {}).get("longitude", 0.0)
                 cafe.save()
+
+                photos = data.get("photos", [])
+                try:
+                    photo_id = photos[0]["name"]
+                    height = photos[0]["heightPx"]
+                    width = photos[0]["widthPx"]
+                    self.get_google_photo(google_place_id, photo_id, height, width)
+                except:
+                    print(f"Error fetching photos data for {google_place_id}")
             else:
+                error = data.get("error")
                 print(
-                    f"Error fetching data for Place ID {google_place_id}: {data.get('status')}"
+                    f"Error fetching data for Place ID {google_place_id}: {error.get("code")} - {error.get("message")}"
                 )
 
         return cafe
+
+    def get_google_photo(self, google_place_id, photo_id, height, width):
+        """Query the Google Places API for a photo."""
+
+        api_key = os.getenv("GOOGLE_PLACES_API_KEY")
+        url = url = (
+            f"https://places.googleapis.com/v1/{photo_id}/media?maxHeightPx={height}&maxWidthPx={width}&skipHttpRedirect=true&key={api_key}"
+        )
+        response = requests.get(url)
+        data = response.json()
+
+        if response.status_code == 200:
+            img_data = requests.get(data.get("photoUri")).content
+            with open(f"static/img/google/{google_place_id}.jpg", "wb") as handler:
+                handler.write(img_data)
+        else:
+            error = data.get("error")
+            print(
+                f"Error fetching data for Photo Name {photo_id}: {error.get("code")} - {error.get("message")}"
+            )
 
 
 class Cafe(models.Model):
@@ -81,10 +110,10 @@ class Cafe(models.Model):
 
     def calc_average_rating(self):
         self.rating = self.ratings.aggregate(models.Avg("rating"))["rating__avg"]
-        self.full_clean()
+        # self.full_clean()
         self.save()
 
     def calc_number_of_ratings(self):
         self.number_of_ratings = self.ratings.count()
-        self.full_clean()
+        # self.full_clean()
         self.save()

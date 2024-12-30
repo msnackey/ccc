@@ -1,6 +1,8 @@
 .DS_Store
 .python-version
 concept.txt
+api_response.json
+api_response_error.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

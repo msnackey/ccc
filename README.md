@@ -16,11 +16,11 @@ CCC has the goal to provide cyclists with a way to share their favorite cafes. H
 
 Of course there are general platforms like Google Maps that collect reviews on all kinds of establishments. To a cyclist, however, certain features are more important than others. I argue that coffee and cake are at the center of any coffee stop experience. Then cycling-related facilities, e.g. secure bike parking, a tire pump, or repair kits, can further enhance the stop: a cleaning station after your muddy mountain bike ride can really improve your ride home. Therefore CCC focuses on these aspects to find the **best coffee stop cafes**.
 
-#### Video Demo: <URL>
+#### Video Demo: [YouTube-link](https://youtu.be/ce14t8_9744)
 ## The project
 The CCC project is written using the Django framework.  The project is divided into three main apps: users, cafes and reviews. 
 
-- <img src="https://getbootstrap.com/docs/4.5/assets/brand/bootstrap-solid.svg" width="19" height="16"/> It uses a combination of Bootstrap and custom css to style the website.
+- <img src="https://getbootstrap.com/docs/4.5/assets/brand/bootstrap-solid.svg" width="19" height="16"/> It uses a combination of Bootstrap and custom CSS to style the website.
 - 🗺️ It also makes use of the Google Maps API's to find and locate cafes on an interactive map.
 
 ### Users app
