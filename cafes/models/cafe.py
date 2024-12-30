@@ -27,7 +27,9 @@ class CafeManager(models.Manager):
             .order_by("-rating", "-number_of_ratings")[:count]
         )
 
-    def get_or_create_from_google(self, google_place_id):
+    def get_or_create_from_google(
+        self, google_place_id
+    ):  # TODO: Add function to get and save cafe image
         """Queries the Google Places API to get additional data."""
 
         cafe, created = self.get_or_create(google_place_id=google_place_id)
@@ -79,10 +81,10 @@ class Cafe(models.Model):
 
     def calc_average_rating(self):
         self.rating = self.ratings.aggregate(models.Avg("rating"))["rating__avg"]
-        # self.full_clean()
+        self.full_clean()
         self.save()
 
     def calc_number_of_ratings(self):
         self.number_of_ratings = self.ratings.count()
-        # self.full_clean()
+        self.full_clean()
         self.save()

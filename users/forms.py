@@ -12,6 +12,7 @@ class LoginForm(forms.Form):
     )
 
 
+# FIXME: Uncomment the validators when deploying to production
 class RegisterForm(forms.ModelForm):
     password1 = forms.CharField(
         label="Password",
