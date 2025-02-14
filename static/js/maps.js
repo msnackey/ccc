@@ -166,7 +166,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     };
 
     // Helper function to create content for info window.
-    // TODO: Style InfoWindow
     function createContentForInfoWindow(id, name, address, googlePlaceIds) {
         let detailUrl = cafeDetailUrl.replace('PLACE_ID_PLACEHOLDER', id);
         let reviewUrl = addReviewUrl.replace('PLACE_ID_PLACEHOLDER', id).replace('PLACE_NAME_PLACEHOLDER', name);
@@ -174,15 +173,22 @@ document.addEventListener("DOMContentLoaded", async function () {
         let nameEl = '<h4 id="place-displayname" class="title">' + name + '</h4>';
         let addressEl = '<span id="place-address">' + address + '</span>';
         let reviewEl = `<a href="${reviewUrl}">Write a review</a>`;
-        let detailsEl;
+        let ratingEl;
 
         if (googlePlaceIds.includes(id)) {
-            detailsEl = `<br/><a href="${detailUrl}">Show details</a>`;
+            let cafe = cafes[cafes.findIndex(cafe => cafe.google_place_id === id)];
+            let ratingsNo = cafe.number_of_ratings;
+            let rating = cafe.rating;
+            let roundedRating = Math.round(rating * 2) / 2;
+            let fullStars = Math.floor(roundedRating);
+            let halfStar = roundedRating % 1 !== 0 ? 1 : 0;
+            let emptyStars = 5 - (fullStars + halfStar);
+            ratingEl = `<a href="${detailUrl}" style="text-decoration:none">` + `<span class="fa-solid fa-star"></span>`.repeat(fullStars) + (halfStar ? `<span class="fa-regular fa-star star"></span>` : ``) + `<span class="fa-regular fa-star"></span>`.repeat(emptyStars) + ` (${ratingsNo} ratings)` + `</a><br/>`;
         } else {
-            detailsEl = '';
+            ratingEl = '';
         };
 
-        let content = '<div id="infowindow-content">' + nameEl + '<br/>' + addressEl + '<br/>' + detailsEl + '<br/>' + reviewEl + '</div>';
+        let content = '<div id="infowindow-content">' + nameEl + ratingEl + '<br/>' + addressEl + '<br/><br/>' + reviewEl + '</div>';
 
         return content;
     };
