@@ -169,20 +169,20 @@ document.addEventListener("DOMContentLoaded", async function () {
     // TODO: Style InfoWindow
     function createContentForInfoWindow(id, name, address, googlePlaceIds) {
         let detailUrl = cafeDetailUrl.replace('PLACE_ID_PLACEHOLDER', id);
-        let reviewUrl = addReviewUrl.replace('PLACE_ID_PLACEHOLDER', id).replace('PLACE_NAME_PLACEHOLDER', name); // FIXME: Escape cafe names (e.g. Dagger Coffee // Zijdebalen)
+        let reviewUrl = addReviewUrl.replace('PLACE_ID_PLACEHOLDER', id).replace('PLACE_NAME_PLACEHOLDER', name);
 
-        let nameElement = '<h4 id="place-displayname" class="title">' + name + '</h4>';
-        let addressElement = '<span id="place-address">' + address + '</span>';
-        let reviewElement = `<a href="${reviewUrl}">Write a review</a>`;
-        let detailsElement;
+        let nameEl = '<h4 id="place-displayname" class="title">' + name + '</h4>';
+        let addressEl = '<span id="place-address">' + address + '</span>';
+        let reviewEl = `<a href="${reviewUrl}">Write a review</a>`;
+        let detailsEl;
 
         if (googlePlaceIds.includes(id)) {
-            detailsElement = `<br/><a href="${detailUrl}">Show details</a>`;
+            detailsEl = `<br/><a href="${detailUrl}">Show details</a>`;
         } else {
-            detailsElement = '';
+            detailsEl = '';
         };
 
-        let content = '<div id="infowindow-content">' + nameElement + '<br/>' + addressElement + '<br/>' + detailsElement + '<br/>' + reviewElement + '</div>';
+        let content = '<div id="infowindow-content">' + nameEl + '<br/>' + addressEl + '<br/>' + detailsEl + '<br/>' + reviewEl + '</div>';
 
         return content;
     };
